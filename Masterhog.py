@@ -379,18 +379,31 @@ def final_strategy(score, opponent_score):
     margin=10
     bacon_score = hogtimus_prime(free_bacon(opponent_score))
     future_score=score+bacon_score
+
+    #forcing beneficial swaps
     if(future_score*2 == opponent_score):
         return 0
     elif (score*2==opponent_score-1):
         return -1
+
+    #preventing opponent from getting re-rolling dice
     elif (future_score+opponent_score)%7==0:
         return 5
+
+    #preventing opponent from getting a beneficial swap 
+    elif (opponent_score*2==future_score):
+        return 5
+
+    #getting free bacon
     elif bacon_score>=margin:
         return 0
     else:
         return 5
+   
+    
     # END PROBLEM 11
 check_strategy(final_strategy)
+
 
 
 ##########################
