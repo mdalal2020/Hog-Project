@@ -284,16 +284,15 @@ def max_scoring_num_rolls(dice=six_sided, num_samples=1000):
     10
     """
     # BEGIN PROBLEM 8
-    i = 1
-    dice_average = make_averaged(roll_dice, num_samples)
-    max_roll = 0
-    max_dice = 0
-    while(i<=10):
-        if(max_roll < dice_average(i, dice)):
-            max_roll = dice_average(i, dice)
-            max_dice = i
-        i+=1
-    return max_dice
+    max_value=0
+    i=10
+    while(i>0):
+        avg_turn_score=make_averaged(roll_dice,1000)(i,dice)
+        if avg_turn_score>=max_value:
+            max_value=avg_turn_score
+            max_rolls=i
+        i-=1
+    return max_rolls
     # END PROBLEM 8
 
 
