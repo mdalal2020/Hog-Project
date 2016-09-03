@@ -336,8 +336,6 @@ def run_experiments():
 
 
 # Strategies
-def bacon_calculation(opponent_score):
-    return hogtimus_prime(free_bacon(opponent_score))
 
 
 def bacon_strategy(score, opponent_score, margin=8, num_rolls=4):
@@ -345,12 +343,16 @@ def bacon_strategy(score, opponent_score, margin=8, num_rolls=4):
     and rolls NUM_ROLLS otherwise.
     """
     # BEGIN PROBLEM 9
-    bacon_score = bacon_calculation(opponent_score)
-    if(bacon_score >= margin):
+   
+    bacon_score=hogtimus_prime(free_bacon(opponent_score))
+    if bacon_score>=margin:
         return 0
-    return num_rolls
+    else:
+        return num_rolls
+
     # END PROBLEM 9
 check_strategy(bacon_strategy)
+
 
 def swap_strategy(score, opponent_score, margin=8, num_rolls=4):
     """This strategy rolls 0 dice when it triggers a beneficial swap. It also
@@ -358,9 +360,9 @@ def swap_strategy(score, opponent_score, margin=8, num_rolls=4):
     NUM_ROLLS.
     """
     # BEGIN PROBLEM 10
-    bacon_score = bacon_calculation(opponent_score)
-    score += bacon_score
-    if(score*2 == opponent_score or bacon_score>=margin):
+    bacon_score = hogtimus_prime(free_bacon(opponent_score))
+    future_score=score+bacon_score
+    if(future_score*2 == opponent_score or bacon_score>=margin):
         return 0
     return num_rolls
     # END PROBLEM 10
