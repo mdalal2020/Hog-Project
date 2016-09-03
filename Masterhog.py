@@ -376,7 +376,14 @@ def final_strategy(score, opponent_score):
     # BEGIN PROBLEM 11
     #print(score,opponent_score)
     
-    margin=10
+    if score>90:
+        margin=5
+    elif score>80:
+        margin=7
+    elif score>70:
+        margin=8
+    else:
+        margin=10
     bacon_score = hogtimus_prime(free_bacon(opponent_score))
     future_score=score+bacon_score
 
