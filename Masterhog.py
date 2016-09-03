@@ -247,8 +247,8 @@ def check_strategy(strategy, goal=GOAL_SCORE):
         while(opponent_score<=goal):
             num_rolls=strategy(score, opponent_score)
             check_strategy_roll(score,opponent_score, num_rolls)
-            n += 1
-        i+=1
+            opponent_score += 1
+        score+=1
     # END PROBLEM 6
 
 
