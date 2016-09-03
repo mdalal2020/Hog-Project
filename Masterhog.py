@@ -41,3 +41,137 @@ def free_bacon(opponent_score):
     #returnns 1 plus the larger digit of the two numbers
     return 1 + max(opponent_score % 10, opponent_score // 10)
     # END PROBLEM 2
+def is_prime(score):
+    """Return True or False based on whether a number is prime
+        >>> is_prime(11)
+        True
+        >>> is_prime(13)
+        True
+        >>> is_prime(132)
+        False
+    """
+    if(score == 0 or score == 1):
+        return False
+    i = 2
+    while(i<= score // 2): #divides a number successfully to test if it is prime
+        if(score % i == 0):
+            return False
+        i+=1
+    return True
+def next_prime(prime):
+    """Return the next prime number after a prime
+    """
+    i = 1
+    while(True):
+        if(is_prime(prime + i)):
+            return prime + i
+        i+=1
+def hogtimus_prime(score):
+    if(is_prime(score)):
+        return next_prime(score)
+    return score
+    
+def take_turn(num_rolls, opponent_score, dice=six_sided):
+    """Simulate a turn rolling NUM_ROLLS dice, which may be 0 (Free Bacon).
+    Return the points scored for the turn by the current player. Also
+    implements the Hogtimus Prime and When Pigs Fly rules.
+    num_rolls:       The number of dice rolls that will be made.
+    opponent_score:  The total score of the opponent.
+    dice:            A function of no args that returns an integer outcome.
+    """
+    # Leave these assert statements here; they help check for errors.
+    assert type(num_rolls) == int, 'num_rolls must be an integer.'
+    assert num_rolls >= 0, 'Cannot roll a negative number of dice in take_turn.'
+    assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
+    assert opponent_score < 100, 'The game should be over.'
+    # BEGIN PROBLEM 2
+    if(num_rolls == 0):
+        score = free_bacon(opponent_score)
+    else:
+        score = roll_dice(num_rolls, dice)
+    score = hogtimus_prime(score)
+    return min(score, 25- num_rolls)
+    
+def reroll(dice):
+    """Return dice that return even outcomes and re-roll odd outcomes of DICE."""
+    def rerolled():
+        # BEGIN PROBLEM 3
+        roll = dice()
+        if(roll % 2 == 0):
+            return roll
+        else:
+            return dice()
+        # END PROBLEM 3
+    return rerolled
+
+def select_dice(score, opponent_score, dice_swapped):
+    """Return the dice used for a turn, which may be re-rolled (Hog Wild) and/or
+    swapped for four-sided dice (Pork Chop).
+    DICE_SWAPPED is True if and only if four-sided dice are being used.
+    """
+    # BEGIN PROBLEM 4
+    "*** REPLACE THIS LINE ***"
+    if dice_swapped==True:
+        dice=four_sided
+    else:
+        dice=six_sided
+
+    # END PROBLEM 4
+    if (score + opponent_score) % 7 == 0:
+        dice = reroll(dice)
+    return dice
+
+def other(player):
+    """Return the other player, for a player PLAYER numbered 0 or 1.
+    >>> other(0)
+    1
+    >>> other(1)
+    0
+    """
+    return 1 - player
+
+def play(strategy0, strategy1, score0=0, score1=0, goal=GOAL_SCORE):
+    """Simulate a game and return the final scores of both players, with
+    Player 0's score first, and Player 1's score second.
+    A strategy is a function that takes two total scores as arguments
+    (the current player's score, and the opponent's score), and returns a
+    number of dice that the current player will roll this turn.
+    strategy0:  The strategy function for Player 0, who plays first
+    strategy1:  The strategy function for Player 1, who plays second
+    score0   :  The starting score for Player 0
+    score1   :  The starting score for Player 1
+    """
+    player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
+    dice_swapped = False  # Whether 4-sided dice have been swapped for 6-sided
+    # BEGIN PROBLEM 5
+    while (score0<goal) and (score1<goal):
+        dice=select_dice(score0, score1, dice_swapped)
+        if player==0:
+            num_roll=strategy0(score0,score1)
+            if num_roll==-1:
+                score0+=1
+                dice_swapped=not(dice_swapped)
+            else:
+                round_points=take_turn(num_roll, score1,dice)
+                score0+=round_points
+                
+        elif player==1:
+            num_roll=strategy1(score1,score0)
+            if num_roll==-1:
+                score1+=1
+                dice_swapped=not(dice_swapped)
+            else:
+                round_points=take_turn(num_roll, score0,dice)
+                score1+=round_points
+                
+        #swine swap
+        if (score0==score1*2) or (score1==score0*2):
+            score0,score1=score1,score0
+        player=other(player)
+        
+    return score0, score1
+
+    # END PROBLEM 5
+    
+
+#######################
