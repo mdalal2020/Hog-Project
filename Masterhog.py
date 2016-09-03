@@ -373,29 +373,19 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 11
+    #print(score,opponent_score)
+    #if more than 5 then swap
     if score==0:
         return -1
-        
-    
-    #setting margins
-    if score>90:
-        margin=5
-    elif score>80:
-        margin=7
-    elif score>70:
-        margin=8
-    else:
-        margin=10
-    
+
+    margin=7
+
     bacon_score = hogtimus_prime(free_bacon(opponent_score))
     future_score=score+bacon_score
 
     #forcing beneficial swaps
     if(future_score*2 == opponent_score):
         return 0
-    #elif (score*2==opponent_score-1):
-        #return -1
-        
 
     #preventing opponent from getting re-rolling dice
     elif (future_score+opponent_score)%7==0:
@@ -410,9 +400,9 @@ def final_strategy(score, opponent_score):
         return 0
     else:
         return 4
-
+    return 4
+    # END PROBLEM 11
 check_strategy(final_strategy)
-
 
 
 ##########################
