@@ -373,7 +373,6 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 11
-    #print(score,opponent_score)
     
     if score==0:
         return -1
