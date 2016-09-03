@@ -375,6 +375,8 @@ def final_strategy(score, opponent_score):
     """
     # BEGIN PROBLEM 11
     #print(score,opponent_score)
+    if score==0:
+        return -1  
     
     if score>90:
         margin=5
