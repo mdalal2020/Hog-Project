@@ -374,7 +374,7 @@ def final_strategy(score, opponent_score):
     """
     # BEGIN PROBLEM 11
     #print(score,opponent_score)
-    #if more than 5 then swap
+    
     if score==0:
         return -1
 
@@ -400,7 +400,7 @@ def final_strategy(score, opponent_score):
         return 0
     else:
         return 4
-    return 4
+    
     # END PROBLEM 11
 check_strategy(final_strategy)
 
