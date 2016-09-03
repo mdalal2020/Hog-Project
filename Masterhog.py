@@ -374,11 +374,21 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 11
-    use_bacon = False
-    return swap_strategy(score, opponent_score, 10, 5)
-    #dont free bacon into opponent getting hogwild
-    if(score + free_bacon(calculation) + opponent_score % 7 == 0):
-        use_bacon = False
+    #print(score,opponent_score)
+    
+    margin=10
+    bacon_score = hogtimus_prime(free_bacon(opponent_score))
+    future_score=score+bacon_score
+    if(future_score*2 == opponent_score):
+        return 0
+    elif (score*2==opponent_score-1):
+        return -1
+    elif (future_score+opponent_score)%7==0:
+        return 5
+    elif bacon_score>=margin:
+        return 0
+    else:
+        return 5
     # END PROBLEM 11
 check_strategy(final_strategy)
 
